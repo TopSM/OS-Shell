@@ -1,5 +1,11 @@
+#include <unistd.h>
+#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h> 
+#include <sys/types.h> 
+#include <string.h>
+#include <errno.h>
 
 #define LSH_RL_BUFSIZE 1024
 #define LSH_TOK_BUFSIZE 64
@@ -153,3 +159,20 @@ int exitCMD(char **args)
   return 0;
 }
 
+void tree(){
+    FILE *f1, *f2, *f3;
+    //create directory with write permission
+    if (mkdir("Dir0", 0777) == -1) {
+            printf("Error : %s\n ", strerror(errno)); 
+    }else{
+            printf("Directory 0 created\n");}
+    chdir("Dir0");
+    f1 = fopen ("t1.txt", "w");
+    f2 = fopen ("t2.txt", "w");
+    f3 = fopen ("t3.txt", "w");
+    printf("Files created\n");
+    if (mkdir("Dir1", 0777) == -1){
+            printf("Error : %s\n ", strerror(errno)); 
+    }else{
+            printf("Directory 1 created\n");}
+}
