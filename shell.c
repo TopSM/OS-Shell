@@ -129,6 +129,52 @@ int launch(char **args)
 
   return 1;
 }
+
+int clear_command(){
+    char *myargs[2];
+    myargs[0] = strdup("clear");
+    myargs[1] = NULL;
+    return launch(myargs);
+}
+
+int ls_command(){
+    char *myargs[3];
+    myargs[0] = strdup("ls");
+    myargs[1] = strdup("-l");  
+    myargs[2] = NULL;
+    return launch(myargs);
+}
+
+void write_to_file(){
+    char path[1035];
+    FILE * output_file = fopen("t1.txt","w");
+    if(output_file == NULL){
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    FILE * command = popen("/bin/ls -l","r");
+    if(command == NULL){
+        printf("Failed to run command\n");
+        exit(1);
+    }
+    while(fgets(path,sizeof(path),command) != NULL){
+        fprintf(output_file,"%s",path);
+    }
+
+    pclose(command);
+    fclose(output_file);
+}
+
+int rename_command(){
+    char *myargs[4];
+    myargs[0] = strdup("mv");
+    myargs[1] = strdup("t1.txt");
+    myargs[2] = strdup("tree.txt");
+    myargs[3] = NULL;
+    return launch(myargs);
+}
+
 int execute(char **args)
 {
 	//printf("execute\n");
@@ -136,6 +182,14 @@ int execute(char **args)
 
   if (args[0] == NULL) {
     // An empty command was entered.
+    return 1;
+  }
+
+  if(strcmp(args[0],"list") == 0){
+    clear_command();
+    ls_command();
+    write_to_file();
+    rename_command();
     return 1;
   }
 
