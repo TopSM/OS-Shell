@@ -7,8 +7,7 @@
 #include <string.h>
 #include <errno.h>
 
-#define LSH_RL_BUFSIZE 1024
-#define LSH_TOK_BUFSIZE 64
+#define BUFSIZE 64
 #define LSH_TOK_DELIM " \t\r\n\a"
 
 void loopShell(void);
@@ -19,16 +18,18 @@ int launch(char **args);
 int lsh_num_builtins();
 int cdCMD(char **args);
 int exitCMD(char **args);
+int tree();
 
 char *builtin_str[] = {
   "cd",
-  "exit"
+  "exit",
+  "tree"
 };
 
 int (*builtin_func[]) (char **) = {
   &cdCMD,
-  &exitCMD
-
+  &exitCMD,
+  &tree
 };
 
 int main(int argc, char **argv)
@@ -61,7 +62,7 @@ void loopShell(void)
   int status;
 
   do {
-    printf("youre user> ");
+    printf("~op user~ ");
     line = readLine(); //inputs line first 
     args = parseInput(line);//parse
     status = execute(args);
@@ -83,7 +84,7 @@ char *readLine(void)
 char **parseInput(char *line)
 {
 //	printf("parse\n");
-  int bufsize = LSH_TOK_BUFSIZE, position = 0;
+  int bufsize = BUFSIZE, position = 0;
   char **tokens = malloc(bufsize * sizeof(char*));
   char *token;
 
@@ -98,7 +99,7 @@ char **parseInput(char *line)
     position++;
 
     if (position >= bufsize) {
-      bufsize += LSH_TOK_BUFSIZE;
+      bufsize += BUFSIZE;
       tokens = realloc(tokens, bufsize * sizeof(char*));
       if (!tokens) {
         fprintf(stderr, "lsh: allocation error\n");
@@ -213,13 +214,14 @@ int exitCMD(char **args)
   return 0;
 }
 
-void tree(){
+int tree(**args){
     FILE *f1, *f2, *f3;
     //create directory with write permission
     if (mkdir("Dir0", 0777) == -1) {
             printf("Error : %s\n ", strerror(errno)); 
     }else{
-            printf("Directory 0 created\n");}
+            printf("Directory 0 created\n");
+          }
     chdir("Dir0");
     f1 = fopen ("t1.txt", "w");
     f2 = fopen ("t2.txt", "w");
@@ -228,5 +230,9 @@ void tree(){
     if (mkdir("Dir1", 0777) == -1){
             printf("Error : %s\n ", strerror(errno)); 
     }else{
-            printf("Directory 1 created\n");}
+            printf("Directory 1 created\n");
+          }
+  return 1;
+
+
 }

@@ -1,0 +1,9 @@
+total 224
+-rw-r--r--@ 1 lts  staff  48780 Nov  7 16:15 Group Project.pdf
+-rw-r--r--  1 lts  staff     11 Nov 14 17:01 README.md
+-rwxr-xr-x  1 lts  staff  14440 Nov 19 22:47 a.out
+-rwxr-xr-x  1 lts  staff  14476 Nov 19 23:05 s
+-rwxr-xr-x  1 lts  staff  13684 Nov 19 22:47 shell
+-rw-r--r--@ 1 lts  staff   4460 Nov 19 23:05 shell.c
+-rw-r--r--  1 lts  staff      0 Nov 19 23:05 t1.txt
+-rw-r--r--@ 1 lts  staff    436 Nov 19 23:00 tree.txt
