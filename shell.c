@@ -23,13 +23,15 @@ int tree();
 char *builtin_str[] = {
   "cd",
   "exit",
-  "tree"
+  "tree",
+  "list"
 };
 
 int (*builtin_func[]) (char **) = {
   &cdCMD,
   &exitCMD,
-  &tree
+  &tree,
+  &list
 };
 
 int main(int argc, char **argv)
@@ -192,13 +194,13 @@ int execute(char **args)
     return 1;
   }
 
-  if(strcmp(args[0],"list") == 0){
-    clear_command();
-    ls_command();
-    write_to_file();
-    rename_command();
-    return 1;
-  }
+  // if(strcmp(args[0],"list") == 0){
+  //   clear_command();
+  //   ls_command();
+  //   write_to_file();
+  //   rename_command();
+  //   return 1;
+  // }
 
   for (i = 0; i < lsh_num_builtins(); i++) {
     if (strcmp(args[0], builtin_str[i]) == 0) {
@@ -212,6 +214,13 @@ int exitCMD(char **args)
 {
 	printf("exiting\n");
   return 0;
+}
+int list(**args){
+    clear_command();
+    ls_command();
+    write_to_file();
+    rename_command();
+    return 1;
 }
 
 int tree(**args){
